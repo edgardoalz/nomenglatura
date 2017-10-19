@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+    <head>
+      <title>Nomenglatura</title>
+        <link rel="stylesheet" href="../node_modules/bulma/css/bulma.css" />
+        <link rel="stylesheet" href="../node_modules/font-awesome/css/font-awesome.css" />
+    </head>
+<body>
+
+  <div class="container">
+      <h1 class="title">Nomenglatura</h1>
+      
+      <div class="field is-horizontal">
+        <div class="field-label is-normal">
+          <label class="label">Latitud</label>
+        </div>
+        <div class="field-body">
+          <div class="field">
+            <p class="control is-expanded has-icons-left">
+              <input class="input" type="text" placeholder="Grados">
+              <span class="icon is-small is-left">
+                <i class="fa fa-user"></i>
+              </span>
+            </p>
+          </div>
+          <div class="field">
+            <p class="control is-expanded has-icons-left has-icons-right">
+              <input class="input" type="text" placeholder="Minutos">
+              <span class="icon is-small is-left">
+                <i class="fa fa-envelope"></i>
+              </span>
+            </p>
+          </div>
+          <div class="field">
+              <p class="control is-expanded has-icons-left has-icons-right">
+                <input class="input" type="text" placeholder="Segundos">
+                <span class="icon is-small is-left">
+                  <i class="fa fa-envelope"></i>
+                </span>
+              </p>
+            </div>
+        </div>
+      </div>
+
+      <div class="field is-horizontal">
+          <div class="field-label is-normal">
+            <label class="label">Longitud</label>
+          </div>
+          <div class="field-body">
+            <div class="field">
+              <p class="control is-expanded has-icons-left">
+                <input class="input" type="text" placeholder="Grados">
+                <span class="icon is-small is-left">
+                  <i class="fa fa-user"></i>
+                </span>
+              </p>
+            </div>
+            <div class="field">
+              <p class="control is-expanded has-icons-left has-icons-right">
+                <input class="input" type="text" placeholder="Minutos">
+                <span class="icon is-small is-left">
+                  <i class="fa fa-envelope"></i>
+                </span>
+              </p>
+            </div>
+            <div class="field">
+                <p class="control is-expanded has-icons-left has-icons-right">
+                  <input class="input" type="text" placeholder="Segundos">
+                  <span class="icon is-small is-left">
+                    <i class="fa fa-envelope"></i>
+                  </span>
+                </p>
+              </div>
+          </div>
+        </div>
+      
+      <div class="field is-horizontal">
+        <div class="field-label">
+          <!-- Left empty for spacing -->
+        </div>
+        <div class="field-body">
+          <div class="field">
+            <div class="control">
+              <button class="button is-primary">
+                Calcular
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    <img src="./fallas_utm_mexico.png" />
+    <div id="mapa" style="width:100%;height:400px;"></div>
+      
+  </div>
+
+<script src="./bundle.js"></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBnEF-6y4TIn3G8-Lz8aGLS_uECEqa5Npg&callback=cargarMapa"></script>
+
+</body>
+</html>

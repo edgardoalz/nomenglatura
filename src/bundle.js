@@ -71,25 +71,29 @@
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__mapa__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__calculo__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__valores__ = __webpack_require__(3);
+
 
 
 
 var mapa = document.getElementById("mapa");
-// window.cargarMapa = crearMapa(mapa);
-window.cargarMapa = () => {};
-console.log(__WEBPACK_IMPORTED_MODULE_1__calculo__["c" /* grilla */]);
+window.cargarMapa = Object(__WEBPACK_IMPORTED_MODULE_0__mapa__["a" /* crearMapa */])(mapa);
 
 var latitud = Object(__WEBPACK_IMPORTED_MODULE_1__calculo__["a" /* crearValor */])(26, 42, 33);
 var longitud = Object(__WEBPACK_IMPORTED_MODULE_1__calculo__["a" /* crearValor */])(-108, 19, 19);
 
-console.log(__WEBPACK_IMPORTED_MODULE_1__calculo__["b" /* escalas */][500](latitud, longitud));
+Object.keys(__WEBPACK_IMPORTED_MODULE_2__valores__["a" /* valores */]).reverse().forEach(valor => {
+    var resultado = Object(__WEBPACK_IMPORTED_MODULE_1__calculo__["c" /* obtenerResultado */])(valor, latitud, longitud);
+    var nomenglatura = Object(__WEBPACK_IMPORTED_MODULE_1__calculo__["b" /* obtenerNomenglatura */])(resultado);
+    console.log(valor, "=>", nomenglatura);
+});
 
 /***/ }),
 /* 1 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* unused harmony export crearMapa */
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return crearMapa; });
 /* unused harmony export crearMarcador */
 /* unused harmony export crearPosicion */
 var crearMapa = (elemento) => {
@@ -122,24 +126,16 @@ var crearPosicion = (lat, lng) => {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return escalas; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return grilla; });
+/* unused harmony export grilla */
 /* unused harmony export gradosMinutosSegundosADecimales */
 /* unused harmony export gradosDecimalesAMinutosSegundos */
 /* harmony export (immutable) */ __webpack_exports__["a"] = crearValor;
-var escalas = {
-    1000000: primerCuadrante,
-    500000: segundoCuadrante,
-    250000: tercerCuadrante,
-    100000: cuartoCuadrante,
-    50000: quintoCuadrante,
-    20000: sextoCuadrante,
-    10000: septimoCuadrante,
-    5000: octavoCuadrante,
-    2000: novenoCuadrante,
-    1000: decimoCuadrante,
-    500: onceavoCuadrante
-};
+/* harmony export (immutable) */ __webpack_exports__["b"] = obtenerNomenglatura;
+/* harmony export (immutable) */ __webpack_exports__["c"] = obtenerResultado;
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__valores__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__simbolo__ = __webpack_require__(4);
+
+
 
 var grilla = [...Array(6).keys()].map(huso => {
     return [...Array(6).keys()].map(banda => {
@@ -173,8 +169,19 @@ function gradosDecimalesAMinutosSegundos (valor) {
     var segundos = Math.round((resto-minutos)*60);
     return crearValor((negative ? -1 : 1) * grados, minutos, segundos);
 }
+
 function crearValor (grados, minutos, segundos) {
     return {grados: grados, minutos: minutos, segundos: segundos};
+}
+
+function obtenerNomenglatura (valor) {
+    var nomenglatura = valor.simboloUnico ? 
+        valor.cuadrante.banda.simbolo :
+        valor.cuadrante.banda.simbolo+valor.cuadrante.huso.simbolo;
+    if (!valor.padre) {
+        return nomenglatura;
+    }
+    return obtenerNomenglatura(valor.padre) + nomenglatura;
 }
 
 function encontrarCuadrante (cuadrantes, latitud, longitud) {
@@ -189,9 +196,6 @@ function encontrarCuadrante (cuadrantes, latitud, longitud) {
         }).concat(acumulado);
     }, []);
 }
-function primerCuadrante (latitud, longitud) {
-    return obtenerCuadrante(grilla, latitud, longitud);
-}
 
 function obtenerCuadrante (cuadrante, latitud, longitud) {
     var cuadrantes = encontrarCuadrante(cuadrante, latitud, longitud);
@@ -201,132 +205,22 @@ function obtenerCuadrante (cuadrante, latitud, longitud) {
     return cuadrantes[0];
 }
 
-function segundoCuadrante (latitud, longitud) {
-    var simboloInicial = 67; // C
-    var divisiones = 2;
-    var simboloUnico = true;
-    var cuadrante = obtenerCuadrante(grilla, latitud, longitud);
-    var subCuadrantes = calcularSubCuadrantes(cuadrante, simboloInicial, latitud, longitud, divisiones, divisiones, simboloUnico, x => String.fromCharCode(x));
-    var resultado = obtenerCuadrante(subCuadrantes, latitud, longitud);
-    resultado.padre = cuadrante;
-    resultado.simboloUnico = simboloUnico;
-    return resultado;
-}
+function obtenerResultado (escala, latitud, longitud) {
+    var valor = __WEBPACK_IMPORTED_MODULE_0__valores__["a" /* valores */][escala];
+    var resultado = {};
+    var subCuadrantes = {};
+    if (!valor) {
+        throw new Error("No existe configuración para la escala seleccionada");
+    }
 
-function tercerCuadrante (latitud, longitud) {
-    var simboloInicial = 10;
-    var divisionesBanda = 4;
-    var divisionesHuso = 3;
-    var simboloUnico = true;
-    var cuadrante = obtenerCuadrante(grilla, latitud, longitud);
-    var subCuadrantes = calcularSubCuadrantes(cuadrante, simboloInicial, latitud, longitud, divisionesBanda, divisionesHuso, simboloUnico, x => x);
-    var resultado = obtenerCuadrante(subCuadrantes, latitud, longitud);
-    resultado.padre = cuadrante;
-    resultado.simboloUnico = simboloUnico;
-    return resultado;
-}
+    if (!valor.padre) {
+        return {cuadrante: obtenerCuadrante(grilla, latitud, longitud)};
+    } 
 
-function cuartoCuadrante (latitud, longitud) {
-    var simboloInicial = 68; // D
-    var divisionesBanda = 2;
-    var divisionesHuso = 3;
-    var simboloUnico = true;
-    var cuadrante = tercerCuadrante(latitud, longitud);
-    var subCuadrantes = calcularSubCuadrantes(cuadrante, simboloInicial, latitud, longitud, divisionesBanda, divisionesHuso, simboloUnico, x => String.fromCharCode(x));
-    var resultado = obtenerCuadrante(subCuadrantes, latitud, longitud);
-    resultado.padre = cuadrante;
-    resultado.simboloUnico = simboloUnico;
-    return resultado;
-}
-
-function quintoCuadrante (latitud, longitud) {
-    var simboloInicial = 1;
-    var divisionesBanda = 8;
-    var divisionesHuso = 9;
-    var simboloUnico = false;
-    var cuadrante = segundoCuadrante(latitud, longitud);
-    var subCuadrantes = calcularSubCuadrantes(cuadrante, simboloInicial, latitud, longitud, divisionesBanda, divisionesHuso, simboloUnico, x => x);
-    var resultado = obtenerCuadrante(subCuadrantes, latitud, longitud);
-    resultado.padre = cuadrante;
-    resultado.simboloUnico = simboloUnico;
-    return resultado;
-}
-
-function sextoCuadrante (latitud, longitud) {
-    var simboloInicial = 100; // d
-    var divisionesBanda = 2;
-    var divisionesHuso = 3;
-    var simboloUnico = true;
-    var cuadrante = quintoCuadrante(latitud, longitud);
-    var subCuadrantes = calcularSubCuadrantes(cuadrante, simboloInicial, latitud, longitud, divisionesBanda, divisionesHuso, simboloUnico, x => String.fromCharCode(x));
-    var resultado = obtenerCuadrante(subCuadrantes, latitud, longitud);
-    resultado.padre = cuadrante;
-    resultado.simboloUnico = simboloUnico;
-    return resultado;
-}
-
-function septimoCuadrante (latitud, longitud) {
-    var simboloInicial = 3;
-    var divisionesBanda = 2;
-    var divisionesHuso = 2;
-    var simboloUnico = true;
-    var cuadrante = sextoCuadrante(latitud, longitud);
-    var subCuadrantes = calcularSubCuadrantes(cuadrante, simboloInicial, latitud, longitud, divisionesBanda, divisionesHuso, simboloUnico, x => x);
-    var resultado = obtenerCuadrante(subCuadrantes, latitud, longitud);
-    resultado.padre = cuadrante;
-    resultado.simboloUnico = simboloUnico;
-    return resultado;
-}
-
-function octavoCuadrante (latitud, longitud) {
-    var simboloInicial = 99; 'c'
-    var divisionesBanda = 2;
-    var divisionesHuso = 2;
-    var simboloUnico = true;
-    var cuadrante = septimoCuadrante(latitud, longitud);
-    var subCuadrantes = calcularSubCuadrantes(cuadrante, simboloInicial, latitud, longitud, divisionesBanda, divisionesHuso, simboloUnico, x => String.fromCharCode(x));
-    var resultado = obtenerCuadrante(subCuadrantes, latitud, longitud);
-    resultado.padre = cuadrante;
-    resultado.simboloUnico = simboloUnico;
-    return resultado;
-}
-
-function novenoCuadrante (latitud, longitud) {
-    var simboloInicial = 3;
-    var divisionesBanda = 2;
-    var divisionesHuso = 2;
-    var simboloUnico = true;
-    var cuadrante = octavoCuadrante(latitud, longitud);
-    var subCuadrantes = calcularSubCuadrantes(cuadrante, simboloInicial, latitud, longitud, divisionesBanda, divisionesHuso, simboloUnico, x => x);
-    var resultado = obtenerCuadrante(subCuadrantes, latitud, longitud);
-    resultado.padre = cuadrante;
-    resultado.simboloUnico = simboloUnico;
-    return resultado;
-}
-
-function decimoCuadrante (latitud, longitud) {
-    var simboloInicial = 99; // 'c'
-    var divisionesBanda = 2;
-    var divisionesHuso = 2;
-    var simboloUnico = true;
-    var cuadrante = novenoCuadrante(latitud, longitud);
-    var subCuadrantes = calcularSubCuadrantes(cuadrante, simboloInicial, latitud, longitud, divisionesBanda, divisionesHuso, simboloUnico, x => String.fromCharCode(x));
-    var resultado = obtenerCuadrante(subCuadrantes, latitud, longitud);
-    resultado.padre = cuadrante;
-    resultado.simboloUnico = simboloUnico;
-    return resultado;
-}
-
-function onceavoCuadrante (latitud, longitud) {
-    var simboloInicial = 3;
-    var divisionesBanda = 2;
-    var divisionesHuso = 2;
-    var simboloUnico = true;
-    var cuadrante = decimoCuadrante(latitud, longitud);
-    var subCuadrantes = calcularSubCuadrantes(cuadrante, simboloInicial, latitud, longitud, divisionesBanda, divisionesHuso, simboloUnico, x => x);
-    var resultado = obtenerCuadrante(subCuadrantes, latitud, longitud);
-    resultado.padre = cuadrante;
-    resultado.simboloUnico = simboloUnico;
+    resultado.padre = obtenerResultado(valor.padre, latitud, longitud);
+    subCuadrantes = calcularSubCuadrantes(resultado.padre.cuadrante, valor.simboloInicial, latitud, longitud, valor.bandas, valor.husos, valor.simboloUnico, Object(__WEBPACK_IMPORTED_MODULE_1__simbolo__["a" /* obtenerConvertidorSimbolo */])(valor.tipoSimbolo));
+    resultado.cuadrante = obtenerCuadrante(subCuadrantes, latitud, longitud);
+    resultado.simboloUnico = valor.simboloUnico;
     return resultado;
 }
 
@@ -355,6 +249,127 @@ function calcularSubCuadrantes(cuadrante, simboloInicial, latitud, longitud, div
             }
         });
     });
+}
+
+/***/ }),
+/* 3 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return valores; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__simbolo__ = __webpack_require__(4);
+
+var valores = {
+    1000000: {
+        padre: null,
+    },
+    500000: {
+        padre: 1000000,
+        tipoSimbolo: __WEBPACK_IMPORTED_MODULE_0__simbolo__["b" /* tipos */].TEXTO,
+        simboloInicial: 67, // C
+        simboloUnico: true,
+        bandas: 2,
+        husos: 2,
+    },
+    250000: {
+        padre: 1000000,
+        tipoSimbolo: __WEBPACK_IMPORTED_MODULE_0__simbolo__["b" /* tipos */].NUMERO,
+        simboloInicial: 10, 
+        simboloUnico: true,
+        bandas: 4,
+        husos: 3,
+    },
+    100000: {
+        padre: 250000,
+        tipoSimbolo: __WEBPACK_IMPORTED_MODULE_0__simbolo__["b" /* tipos */].TEXTO,
+        simboloInicial: 68, // D 
+        simboloUnico: true,
+        bandas: 2,
+        husos: 3,
+    },
+    50000: {
+        padre: 500000,
+        tipoSimbolo: __WEBPACK_IMPORTED_MODULE_0__simbolo__["b" /* tipos */].NUMERO,
+        simboloInicial: 1,
+        simboloUnico: false,
+        bandas: 8,
+        husos: 9,
+    },
+    20000: {
+        padre: 50000,
+        tipoSimbolo: __WEBPACK_IMPORTED_MODULE_0__simbolo__["b" /* tipos */].TEXTO,
+        simboloInicial: 100, // d
+        simboloUnico: true,
+        bandas: 2,
+        husos: 3,
+    },
+    10000: {
+        padre: 20000,
+        tipoSimbolo: __WEBPACK_IMPORTED_MODULE_0__simbolo__["b" /* tipos */].NUMERO,
+        simboloInicial: 3,
+        simboloUnico: true,
+        bandas: 2,
+        husos: 2,
+    },
+    5000: {
+        padre: 10000,
+        tipoSimbolo: __WEBPACK_IMPORTED_MODULE_0__simbolo__["b" /* tipos */].TEXTO,
+        simboloInicial: 99, // c
+        simboloUnico: true,
+        bandas: 2,
+        husos: 2,
+    },
+    2000: {
+        padre: 5000,
+        tipoSimbolo: __WEBPACK_IMPORTED_MODULE_0__simbolo__["b" /* tipos */].NUMERO,
+        simboloInicial: 3,
+        simboloUnico: true,
+        bandas: 2,
+        husos: 2,
+    },
+    1000: {
+        padre: 2000,
+        tipoSimbolo: __WEBPACK_IMPORTED_MODULE_0__simbolo__["b" /* tipos */].TEXTO,
+        simboloInicial: 99, // 'c'
+        simboloUnico: true,
+        bandas: 2,
+        husos: 2,
+    },
+    500: {
+        padre: 1000,
+        tipoSimbolo: __WEBPACK_IMPORTED_MODULE_0__simbolo__["b" /* tipos */].NUMERO,
+        simboloInicial: 3,
+        simboloUnico: true,
+        bandas: 2,
+        husos: 2,
+    }
+};
+
+/***/ }),
+/* 4 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return tipos; });
+/* harmony export (immutable) */ __webpack_exports__["a"] = obtenerConvertidorSimbolo;
+/* unused harmony export simboloANumero */
+/* unused harmony export simboloATexto */
+var tipos = {TEXTO: 0, NUMERO: 1};
+
+function obtenerConvertidorSimbolo (tipo) {
+    if (tipo == tipos.TEXTO) {
+        return simboloATexto;
+    } else if (tipo == tipos.NUMERO) {
+        return simboloANumero;
+    }
+}
+
+function simboloANumero (simbolo) {
+    return simbolo;
+}
+
+function simboloATexto (simbolo) {
+    return String.fromCharCode(simbolo);
 }
 
 /***/ })

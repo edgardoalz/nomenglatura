@@ -5,11 +5,40 @@
         <link rel="stylesheet" href="../node_modules/bulma/css/bulma.css" />
         <link rel="stylesheet" href="../node_modules/font-awesome/css/font-awesome.css" />
     </head>
+    <style>
+      .is-invisible {
+        display: none;
+      }
+    </style>
 <body>
 
   <div class="container">
       <h1 class="title">Nomenglatura</h1>
       
+      <div class="field is-horizontal">
+          <div class="field-label is-normal">
+              <label class="label">Escala</label>
+            </div>
+            <div class="field-body">
+              <div class="select">
+                  <select id="escala">
+                    <option>Selecciona una escala</option>
+                    <option>1000000</option>
+                    <option>500000</option>
+                    <option>250000</option>
+                    <option>100000</option>
+                    <option>50000</option>
+                    <option>20000</option>
+                    <option>10000</option>
+                    <option>5000</option>
+                    <option>2000</option>
+                    <option>1000</option>
+                    <option>500</option>
+                  </select>
+                </div>
+            </div>
+        </div>
+        
       <div class="field is-horizontal">
         <div class="field-label is-normal">
           <label class="label">Latitud</label>
@@ -17,7 +46,7 @@
         <div class="field-body">
           <div class="field">
             <p class="control is-expanded has-icons-left">
-              <input class="input" type="text" placeholder="Grados">
+              <input id="latGrados" class="input" type="text" placeholder="Grados">
               <span class="icon is-small is-left">
                 <i class="fa fa-hashtag"></i>
               </span>
@@ -25,7 +54,7 @@
           </div>
           <div class="field">
             <p class="control is-expanded has-icons-left has-icons-right">
-              <input class="input" type="text" placeholder="Minutos">
+              <input id="latMinutos" class="input" type="text" placeholder="Minutos">
               <span class="icon is-small is-left">
                 <i class="fa fa-hashtag"></i>
               </span>
@@ -33,7 +62,7 @@
           </div>
           <div class="field">
               <p class="control is-expanded has-icons-left has-icons-right">
-                <input class="input" type="text" placeholder="Segundos">
+                <input id="latSegundos" class="input" type="text" placeholder="Segundos">
                 <span class="icon is-small is-left">
                   <i class="fa fa-hashtag"></i>
                 </span>
@@ -49,7 +78,7 @@
           <div class="field-body">
             <div class="field">
               <p class="control is-expanded has-icons-left">
-                <input class="input" type="text" placeholder="Grados">
+                <input id="lngGrados" class="input" type="text" placeholder="Grados">
                 <span class="icon is-small is-left">
                   <i class="fa fa-hashtag"></i>
                 </span>
@@ -57,7 +86,7 @@
             </div>
             <div class="field">
               <p class="control is-expanded has-icons-left has-icons-right">
-                <input class="input" type="text" placeholder="Minutos">
+                <input id="lngMinutos" class="input" type="text" placeholder="Minutos">
                 <span class="icon is-small is-left">
                   <i class="fa fa-hashtag"></i>
                 </span>
@@ -65,7 +94,7 @@
             </div>
             <div class="field">
                 <p class="control is-expanded has-icons-left has-icons-right">
-                  <input class="input" type="text" placeholder="Segundos">
+                  <input id="lngSegundos" class="input" type="text" placeholder="Segundos">
                   <span class="icon is-small is-left">
                     <i class="fa fa-hashtag"></i>
                   </span>
@@ -74,29 +103,6 @@
           </div>
         </div>
       
-      <div class="field is-horizontal">
-        <div class="field-label is-normal">
-            <label class="label">Escala</label>
-          </div>
-          <div class="field-body">
-            <div class="select">
-                <select>
-                  <option>Selecciona una escala</option>
-                  <option>1000000</option>
-                  <option>500000</option>
-                  <option>250000</option>
-                  <option>100000</option>
-                  <option>50000</option>
-                  <option>20000</option>
-                  <option>10000</option>
-                  <option>5000</option>
-                  <option>2000</option>
-                  <option>1000</option>
-                  <option>500</option>
-                </select>
-              </div>
-          </div>
-      </div>
       
       <div class="field is-horizontal">
         <div class="field-label">
@@ -105,14 +111,19 @@
         <div class="field-body">
           <div class="field">
             <div class="control">
-              <button class="button is-primary">
+              <button id="btnCalcular" class="button is-primary">
                 Calcular
               </button>
             </div>
           </div>
         </div>
       </div>
-    <div id="mapa" style="width:100%;height:400px;"></div>
+
+    <div id="mapa" style="width:100%;height:300px;"></div>
+    <div id="mensaje" class="notification is-invisible">
+      <button id="cerrarMensaje" class="delete"></button>
+      <span id="mensajeContenido"></span>
+    </div>
       
   </div>
 

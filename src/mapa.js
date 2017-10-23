@@ -1,6 +1,6 @@
 export var crearMapa = (elemento) => {
   return () => {
-    return new google.maps.Map(elemento, {
+    window.mapa = new google.maps.Map(elemento, {
       center: crearPosicion(25.8197105,-108.9799387),
       zoom: 15,
     });

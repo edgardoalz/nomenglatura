@@ -19,6 +19,15 @@ export var grilla = [...Array(6).keys()].map(huso => {
     });
 });
 
+export function obtenerCuadranteGlobal () {
+    var primero = grilla[0][0];
+    var ultimo = grilla[5][5];
+    return {
+        banda: {inicial: primero.banda.inicial, final: ultimo.banda.final},
+        huso: {inicial: primero.huso.inicial, final: ultimo.huso.final}
+    }
+}
+
 export function gradosMinutosSegundosADecimales (valor) {
     var negative = valor.grados < 0;
     return (negative ? -1 : 1) * (Math.abs(valor.grados) + 1*(valor.minutos/60) + 1*(valor.segundos/3600));

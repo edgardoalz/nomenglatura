@@ -1,12 +1,12 @@
 import {crearMapa} from './mapa';
-import {cuadrantes, crearValor, buscarCuadrante} from './calculo';
+import {grilla, crearValor, escalas} from './calculo';
 
 var mapa = document.getElementById("mapa");
 // window.cargarMapa = crearMapa(mapa);
 window.cargarMapa = () => {};
-console.log(cuadrantes);
+console.log(grilla);
 
 var latitud = crearValor(26, 42, 33);
 var longitud = crearValor(-108, 19, 19);
 
-console.log(buscarCuadrante(latitud, longitud));
+console.log(escalas[500](latitud, longitud));

@@ -86,7 +86,8 @@ Object.keys(__WEBPACK_IMPORTED_MODULE_2__valores__["a" /* valores */]).reverse()
     var resultado = Object(__WEBPACK_IMPORTED_MODULE_1__calculo__["c" /* obtenerResultado */])(valor, latitud, longitud);
     var nomenglatura = Object(__WEBPACK_IMPORTED_MODULE_1__calculo__["b" /* obtenerNomenglatura */])(resultado);
     console.log(valor, "=>", nomenglatura);
-});
+});    
+
 
 /***/ }),
 /* 1 */
@@ -176,8 +177,8 @@ function crearValor (grados, minutos, segundos) {
 
 function obtenerNomenglatura (valor) {
     var nomenglatura = valor.simboloUnico ? 
-        valor.cuadrante.banda.simbolo :
-        valor.cuadrante.banda.simbolo+valor.cuadrante.huso.simbolo;
+        valor.cuadrante.banda.simbolo.toString() :
+        valor.cuadrante.banda.simbolo.toString()+valor.cuadrante.huso.simbolo.toString();
     if (!valor.padre) {
         return nomenglatura;
     }

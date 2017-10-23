@@ -12,4 +12,4 @@ Object.keys(valores).reverse().forEach(valor => {
     var resultado = obtenerResultado(valor, latitud, longitud);
     var nomenglatura = obtenerNomenglatura(resultado);
     console.log(valor, "=>", nomenglatura);
-});
+});    

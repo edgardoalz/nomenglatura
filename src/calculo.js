@@ -40,8 +40,8 @@ export function crearValor (grados, minutos, segundos) {
 
 export function obtenerNomenglatura (valor) {
     var nomenglatura = valor.simboloUnico ? 
-        valor.cuadrante.banda.simbolo :
-        valor.cuadrante.banda.simbolo+valor.cuadrante.huso.simbolo;
+        valor.cuadrante.banda.simbolo.toString() :
+        valor.cuadrante.banda.simbolo.toString()+valor.cuadrante.huso.simbolo.toString();
     if (!valor.padre) {
         return nomenglatura;
     }

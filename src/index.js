@@ -2,6 +2,8 @@ import {crearMapa, crearMarcador, crearPosicion} from './mapa';
 import {crearValor, obtenerResultado, obtenerNomenglatura, 
     gradosMinutosSegundosADecimales, obtenerCuadranteGlobal} from './calculo';
 import $ from "jquery";
+import 'bulma/css/bulma.css';
+import 'font-awesome/css/font-awesome.css';
 
 var mapa = document.getElementById("mapa");
 var marcador = null;

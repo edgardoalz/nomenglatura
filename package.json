@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "wepback",
-    "start": "webpack-dev-server --content-base src/ --inline"
+    "start": "webpack-dev-server --content-base ./ --inline"
   },
   "keywords": [],
   "author": "",
